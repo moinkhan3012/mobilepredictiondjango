@@ -2,6 +2,9 @@ from . import price_prediction as pp
 import pandas as pd
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
+# from django_tables2.tables import Table
+
+# Create your views here.
 
 from io import BytesIO
 import base64
@@ -9,9 +12,9 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from django.template import RequestContext
-from django.shortcuts import render_to_response
-
-
+from django.templatetags.static import static
+import os
+from django.contrib.staticfiles import finders
 def home(request):
 
     knn = pp.KNN()
@@ -27,7 +30,7 @@ def home(request):
 
     KNNscore =knn.score
 
-    df = pd.read_csv('E:\\Smart-Phone-Price-Prediction\\datasets\\train.csv')
+    df =pd.read_csv(finders.find('data/new_data.csv'))
     html_table = pp.showhead().to_html()
 
     return render(request,'home.html', {'html_table': html_table,'elbow':elbow,'KNNscore':KNNscore,'NBCscore':nbc.score,'LRscore':lr.score})

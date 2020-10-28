@@ -1,9 +1,13 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-
+import seaborn as sns
+import math
+import os
+# %matplotlib inline
 from sklearn.model_selection import train_test_split
-
+from django.templatetags.static import static
+from django.contrib.staticfiles import finders
 
 class Specs:
     def __init__(self):
@@ -16,13 +20,13 @@ class Specs:
         self.price_range = None
 
 def showhead():
-    dataset = pd.read_csv('E:\\newdata\\new_data.csv')
+    dataset = pd.read_csv(finders.find('data/new_data.csv'))
     return dataset.head()
 
 
 class LR:
     def __init__(self):
-        dataset = pd.read_csv('E:\\newdata\\new_data.csv')
+        dataset = pd.read_csv(finders.find('data/new_data.csv'))
 
 
         self.X = dataset.drop('price_range', axis=1)
@@ -106,7 +110,7 @@ class NBC :
         from sklearn.metrics import accuracy_score
 
 
-        dataset = pd.read_csv('E:\\newdata\\new_data.csv')
+        dataset = pd.read_csv(finders.find('data/new_data.csv'))
 
         self.X = dataset.drop('price_range', axis=1)
 
@@ -158,7 +162,7 @@ class KNN:
     def __init__(self):
         from sklearn.neighbors import KNeighborsClassifier
 
-        dataset = pd.read_csv('D:\\django_project2\\new_data.csv')
+        dataset = pd.read_csv(finders.find('data/new_data.csv'))
 
         self.X = dataset.drop('price_range', axis=1)
         Xn = ((self.X - self.X.min())/(self.X.max() - self.X.min()))
